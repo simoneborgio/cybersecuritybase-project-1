@@ -5,13 +5,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import sec.project.domain.Signup;
 import sec.project.repository.SignupRepository;
 
+import javax.annotation.PostConstruct;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -19,6 +18,11 @@ public class SignupController {
 
     @Autowired
     private SignupRepository signupRepository;
+
+    @PostConstruct
+    public void init() {
+        signupRepository.save(new Signup("Test sign up", "My test address", "ted"));
+    }
 
     @RequestMapping("/")
     public String defaultMapping() {
@@ -31,9 +35,9 @@ public class SignupController {
     }
 
     @RequestMapping(value = "/form", method = RequestMethod.POST)
-    public String submitForm(@RequestParam String name, @RequestParam String address, Model model) {
+    public String submitForm(@RequestParam String name, @RequestParam String address, Model model, Principal principal) {
 
-        Integer created = signupRepository.insecureSave(new Signup(name, address));
+        Integer created = signupRepository.insecureSave(new Signup(name, address, principal.getName()));
 
         // brutal way to retrieve last created object
         // won't work in a real concurrent environment
@@ -46,15 +50,30 @@ public class SignupController {
         return "done";
     }
 
-//    @ResponseBody
-//    @RequestMapping(value = "/signups", method = RequestMethod.GET)
-//    public List<Signup> list() {
-//        return signupRepository.findAll();
-//    }
+    @RequestMapping(value = "/signups", method = RequestMethod.GET)
+    public String list(Model model, Principal principal) {
+
+        model.addAttribute("items", signupRepository.findByUser(principal.getName()));
+
+        return "signups";
+    }
+
+    @RequestMapping(value = "/signups/{id}", method = RequestMethod.GET)
+    public String read(Model model, @PathVariable Long id) {
+
+        // 2013-A4-Insecure Direct Object References
+        // Any authenticated user can access this page using any ID and reading
+        // contents that doesn't belong to them
+
+        model.addAttribute("item", signupRepository.findOne(id));
+
+        return "signup";
+    }
 
     @ResponseBody
-    @RequestMapping(value = "/signups/{id}", method = RequestMethod.GET)
-    public List<Signup> read() {
+    @RequestMapping(value = "/api/signups", method = RequestMethod.GET)
+    public List<Signup> apiList() {
+
         return signupRepository.findAll();
     }
 

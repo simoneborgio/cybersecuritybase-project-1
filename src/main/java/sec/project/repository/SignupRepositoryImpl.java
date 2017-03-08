@@ -20,10 +20,15 @@ public class SignupRepositoryImpl implements SignupRepositoryCustom {
     @Transactional
     public Integer insecureSave(Signup signup) {
 
-        StringBuilder sql = new StringBuilder("INSERT INTO Signup (name, address) VALUES ('");
+        // 2013-A1-Injection
+        // the query used by this method is vulnerable to SQL injection
+
+        StringBuilder sql = new StringBuilder("INSERT INTO Signup (name, address, user) VALUES ('");
         sql.append(signup.getName());
         sql.append("', '");
         sql.append(signup.getAddress());
+        sql.append("', '");
+        sql.append(signup.getUser());
         sql.append("')");
 
         log.info("Executing native query: {}", sql.toString());
