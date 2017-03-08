@@ -37,4 +37,13 @@ public class SignupRepositoryImpl implements SignupRepositoryCustom {
 
         return nativeQuery.executeUpdate();
     }
+
+    @Override
+    public Signup insecureFindOne(Long id) {
+
+        StringBuilder sql = new StringBuilder("SELECT * FROM Signup WHERE id = ");
+        sql.append(id);
+
+        return (Signup) em.createNativeQuery(sql.toString(), Signup.class).getSingleResult();
+    }
 }

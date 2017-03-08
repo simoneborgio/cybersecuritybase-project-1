@@ -65,7 +65,7 @@ public class SignupController {
         // Any authenticated user can access this page using any ID and reading
         // contents that doesn't belong to them
 
-        model.addAttribute("item", signupRepository.findOne(id));
+        model.addAttribute("item", signupRepository.insecureFindOne(id));
 
         return "signup";
     }

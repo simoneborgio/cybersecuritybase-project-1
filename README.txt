@@ -29,7 +29,9 @@ Both attributes are not validated when received nor escaped when shown.
 
 Once again, name and address attributes in signup form are not escaped when the user submits the form.
 An insecure instruction has been used to persist these attributes, so it is possible to inject arbitrary SQL code in both fields.
-You can try typing any name and this address: Address 1'), ('Name 2', 'Address 2
+You can try typing any name and this address: Address 1', 'ted'), ('Name 2', 'Address 2
+
+Zap: enable URL Path option in Input Vectors tab
 
 
 4. 2013-A4-Insecure Direct Object References
@@ -39,8 +41,3 @@ where {id} is an integer counter, incremented by one after each subscription and
 
 
 5. 2013-A7-Missing Function Level Access Control
-
-or 2013-A10-Unvalidated Redirects and Forwards
-
-
-

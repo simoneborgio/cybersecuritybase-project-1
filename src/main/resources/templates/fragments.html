@@ -43,7 +43,7 @@
 
                         <li><a href="#" th:href="@{/form}">Create</a></li>
 
-                        <th:block sec:authorize="hasRole('ADMIN')">
+                        <th:block sec:authorize="hasAuthority('ADMIN')">
                             <li><a href="#" th:href="@{/admin}">Admin</a></li>
                         </th:block>
 
