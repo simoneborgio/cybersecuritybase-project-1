@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Thank you!</title>
+    <head th:replace="fragments :: 'head'">
+
     </head>
     <body>
+
+        <div th:include="fragments :: 'navbar'"></div>
 
         <h1>Thank you! You have been signed up to the event!</h1>
 

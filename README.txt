@@ -2,6 +2,10 @@
 
 ## Vulnerabilities
 
+Users (password and username are the same):
+ted: normal user
+ben: normal user
+
 1. 2013-A8-Cross-Site Request Forgery (CSRF)
 
 The entire web application is vulnerable to CSRF due to Spring Security misconfiguration.

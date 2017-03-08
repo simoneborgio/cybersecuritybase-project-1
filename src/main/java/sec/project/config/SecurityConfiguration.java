@@ -22,13 +22,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // no real security at the moment
         http.authorizeRequests()
-                .anyRequest().permitAll();
+                .anyRequest().authenticated();
 
         /*
          * 2013-A8-Cross-Site Request Forgery (CSRF):
          * disable CSRF protection, introducing the vulnerability on all website forms
          * */
         http.csrf().disable();
+
+        http.formLogin().permitAll();
     }
 
     @Autowired
