@@ -23,6 +23,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // no real security at the moment
         http.authorizeRequests()
                 .anyRequest().permitAll();
+
+        /*
+         * 2013-A8-Cross-Site Request Forgery (CSRF):
+         * disable CSRF protection, introducing the vulnerability on all website forms
+         * */
+        http.csrf().disable();
     }
 
     @Autowired

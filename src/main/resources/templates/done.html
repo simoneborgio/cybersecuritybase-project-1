@@ -7,5 +7,22 @@
 
         <h1>Thank you! You have been signed up to the event!</h1>
 
+        <p>Here is your data for review:</p>
+
+        <!--
+        2013-A3-Cross-Site Scripting (XSS)
+
+        Signup name and address attributes are not escaped when shown, causing an XSS vulnerability
+
+        Test: type any name and this address: Address 1'), ('Name 2', 'Address 2
+
+        -->
+
+        <p>Name: <span th:utext="${signup.name}"></span></p>
+
+        <p>Address: <span th:utext="${signup.address}"></span></p>
+
+        <p><span th:utext="${created}"></span> items saved</p>
+
     </body>
 </html>
