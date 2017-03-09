@@ -1,30 +1,29 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="fragments :: 'head'">
+<head th:replace="fragments :: 'head'">
 
-    </head>
-    <body>
+</head>
+<body>
 
-        <div th:include="fragments :: 'navbar'"></div>
+<div class="container">
 
-        <h1>Thank you! You have been signed up to the event!</h1>
+    <div th:include="fragments :: 'navbar'"></div>
 
-        <p>Here is your data for review:</p>
+    <h1>Thank you! You have been signed up to the event!</h1>
 
-        <!--
-        2013-A3-Cross-Site Scripting (XSS)
+    <p>Here is your data for review:</p>
 
-        Signup name and address attributes are not escaped when shown, causing an XSS vulnerability
+    <!--
+    2013-A3-Cross-Site Scripting (XSS)
 
-        Test: type any name and this address: Address 1'), ('Name 2', 'Address 2
+    Signup name and address attributes are not escaped when shown, causing an XSS vulnerability
+    -->
 
-        -->
+    <p>Name: <span th:utext="${signup.name}"></span></p>
 
-        <p>Name: <span th:utext="${signup.name}"></span></p>
+    <p>Address: <span th:utext="${signup.address}"></span></p>
 
-        <p>Address: <span th:utext="${signup.address}"></span></p>
-
-        <p><span th:utext="${created}"></span> items saved</p>
-
-    </body>
+    <p><span th:utext="${created}"></span> items saved</p>
+</div>
+</body>
 </html>

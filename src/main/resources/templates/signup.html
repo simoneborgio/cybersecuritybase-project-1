@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="fragments :: 'head'">
+<head th:replace="fragments :: 'head'">
 
-    </head>
-    <body>
+</head>
+<body>
+<div class="container">
 
-        <div th:include="fragments :: 'navbar'"></div>
+    <div th:include="fragments :: 'navbar'"></div>
 
-        <h1>Details of sign up #<span th:text="${item.id}"></span></h1>
+    <h1>Details of sign up #<span th:text="${item.id}"></span></h1>
 
     <ul>
         <li>
@@ -16,6 +17,6 @@
             User: <span th:utext="${item.user}">User</span><br/>
         </li>
     </ul>
-
-    </body>
+</div>
+</body>
 </html>

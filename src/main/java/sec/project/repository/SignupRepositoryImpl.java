@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
+import java.util.List;
 
 public class SignupRepositoryImpl implements SignupRepositoryCustom {
 
@@ -45,5 +46,17 @@ public class SignupRepositoryImpl implements SignupRepositoryCustom {
         sql.append(id);
 
         return (Signup) em.createNativeQuery(sql.toString(), Signup.class).getSingleResult();
+    }
+
+    @Override
+    public List<Signup> insecureFind(String user, String search) {
+
+        StringBuilder sql = new StringBuilder("SELECT * FROM Signup WHERE user = ");
+        sql.append("'").append(user).append("'")
+                .append(" AND name = '").append(search).append("'");
+
+        log.info("Executing native query: {}", sql.toString());
+
+        return em.createNativeQuery(sql.toString(), Signup.class).getResultList();
     }
 }

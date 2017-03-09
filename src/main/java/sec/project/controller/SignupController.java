@@ -21,7 +21,8 @@ public class SignupController {
 
     @PostConstruct
     public void init() {
-        signupRepository.save(new Signup("Test sign up", "My test address", "ted"));
+        signupRepository.save(new Signup("Sign up by Ted", "Ted's address", "ted"));
+        signupRepository.save(new Signup("Sign up by Ben", "Ben's address", "ben"));
     }
 
     @RequestMapping("/")
@@ -51,9 +52,19 @@ public class SignupController {
     }
 
     @RequestMapping(value = "/signups", method = RequestMethod.GET)
-    public String list(Model model, Principal principal) {
+    public String list(Model model, Principal principal, @RequestParam(required = false) String search) {
 
-        model.addAttribute("items", signupRepository.findByUser(principal.getName()));
+        List<Signup> items;
+        if (search != null) {
+
+            items = signupRepository.insecureFind(principal.getName(), search);
+        } else {
+
+            items = signupRepository.findByUser(principal.getName());
+        }
+
+        model.addAttribute("items", items);
+        model.addAttribute("search", search);
 
         return "signups";
     }
